@@ -9,7 +9,7 @@ open SolutionUtils
 
 let writeTitle() =
     AnsiConsole.Write(Rule())
-    AnsiConsole.MarkupLine("[bold]Welcome to Package Reference Replacer 🛠 !️[/]")
+    AnsiConsole.MarkupLine("[bold]Welcome to Reference Manager 🛠 !️[/]")
     AnsiConsole.Write(Rule())
     AnsiConsole.WriteLine String.Empty
 
