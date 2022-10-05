@@ -1,10 +1,12 @@
 module ReferenceManager.ListDependencies
 
+
 open System.Collections.Generic
-open SolutionUtils
 open Microsoft.Build.Construction
 open Spectre.Console
 open System.Linq
+open System
+open ReferenceManager.SolutionManager
 
 let getProjectPath (solution: SolutionFile) =
     let selectionPrompt =
@@ -21,14 +23,25 @@ let getProjectPath (solution: SolutionFile) =
 
 let getDependencies (project: ProjectRootElement) =
 
-    let dependencies = project.Items.Where(fun c -> c.ElementName.Equals("PackageReference"))
+    let dependencies =
+        project.Items.Where (fun c ->
+            c.ElementName.Equals("PackageReference")
+            || c.ElementName.Equals("ProjectReference"))
 
     dependencies
 
-let writeDependencies (dependencies : IEnumerable<ProjectItemElement>) =
-    for dependency in dependencies do
-        let version = dependency.Metadata.First(fun m -> m.Name = "Version").Value
-        AnsiConsole.MarkupLine $"[green]-[/] {dependency.Include} {version}"
+let writeDependencies (dependencies: IEnumerable<ProjectItemElement>) =
+    for dependency in dependencies do             
+        AnsiConsole.Markup $"[green]-[/] {dependency.Include}"
+        
+        let versionMetadata =
+            dependency.Metadata.FirstOrDefault(fun m -> m.Name = "Version")
+            
+        match versionMetadata with
+        | null -> AnsiConsole.MarkupLine String.Empty
+        | _ -> AnsiConsole.MarkupLine $" {versionMetadata.Value}"
+        
+        AnsiConsole.WriteLine String.Empty
 
 let listDependenciesFromProject (solution: SolutionFile) =
     let selectedProject =
@@ -38,4 +51,4 @@ let listDependenciesFromProject (solution: SolutionFile) =
     let dependencies =
         getDependencies selectedProject
 
-    writeDependencies dependencies
+    writeDependencies(dependencies)

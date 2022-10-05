@@ -6,7 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="SolutionUtils.fs" />
+        <Compile Include="Utils.fs" />
+        <Compile Include="SolutionManager.fs" />
         <Compile Include="ListDependencies.fs" />
         <Compile Include="ReplaceDependency.fs" />
         <Compile Include="Program.fs" />

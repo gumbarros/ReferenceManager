@@ -1,58 +1,24 @@
 ﻿module ReferenceManager.Program
 
-open System.IO
-open Microsoft.Build.Construction
-open Spectre.Console
-open System
 open ReferenceManager.ListDependencies
-open SolutionUtils
+open ReferenceManager.ReplaceDependency
+open ReferenceManager.Utils
+open ReferenceManager.SolutionManager
 
-let writeTitle() =
-    AnsiConsole.Write(Rule())
-    AnsiConsole.MarkupLine("[bold]Welcome to Reference Manager 🛠 !️[/]")
-    AnsiConsole.Write(Rule())
-    AnsiConsole.WriteLine String.Empty
+writeAppTitle()
 
-let promptPath() =
-    let pathPrompt = TextPrompt("What's your [green].sln[/] file path?")
-
-    pathPrompt.PromptStyle <- "green"
-
-    pathPrompt.Validator <-
-        fun (path) ->
-            if File.Exists(path) then
-                ValidationResult.Success()
-            else
-                ValidationResult.Error("[red]Invalid path![/]")
-
-    AnsiConsole.Prompt(pathPrompt)
-
-let writeSolutionProjects(solutionName, solutionFile : SolutionFile) =
-    let solutionTree =
-        Tree($"[bold]{solutionName}[/]")
-
-    solutionTree.Style <- Style(Color.Green)
-    solutionTree.AddNodes(getSolutionProjectNames(solutionFile))
-
-    AnsiConsole.WriteLine String.Empty
-    AnsiConsole.Write solutionTree
-    AnsiConsole.WriteLine String.Empty
-
-writeTitle()
-let path = promptPath()
-let solutionName = Path.GetFileName(path)
-let solutionFile = SolutionFile.Parse(path)
-
-writeSolutionProjects(solutionName, solutionFile)
-
-let action =
-    AnsiConsole.Prompt(
-        SelectionPrompt<string>()
-            .AddChoices("List Dependencies from Project", "Replace Dependency")
-    )
-
-match action with
-    | "List Dependencies from Project" -> listDependenciesFromProject solutionFile
-    | _ -> printf "TODO"
+let rec loadSolution() =
+    let solution : SolutionData = promptSolution()
     
-let prompt = AnsiConsole.Prompt<string>(TextPrompt(String.Empty))
+    writeSolutionProjects(solution)
+    
+    while true do 
+        let selectedChoice = promptChoice()
+
+        match selectedChoice with
+        | 0 -> listDependenciesFromProject solution.File
+        | 1 -> replaceDependencies solution.File ()
+        | 2 -> loadSolution()
+        | _ -> exit(1)
+
+loadSolution()
