@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PackageReferenceManager", "PackageReferenceManager.fsproj", "{26A06358-9C95-43F2-BDA8-6885FC749778}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ReferenceManager", "ReferenceManager.fsproj", "{26A06358-9C95-43F2-BDA8-6885FC749778}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
