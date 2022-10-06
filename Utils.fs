@@ -10,20 +10,17 @@ let writeAppTitle () =
     AnsiConsole.Write(Rule())
     AnsiConsole.WriteLine String.Empty
 
-let promptPath (fileExtension : string) =
-    let pathPrompt =
-        TextPrompt($"What's your [green]{fileExtension}[/] file path?")
+let pathExists (path: string) =
+    if File.Exists(path) then
+        ValidationResult.Success()
+    else
+        ValidationResult.Error("[red]Invalid path![/]")
 
-    pathPrompt.PromptStyle <- "green"
+let promptPath (subject: string) =
+    let prompt =
+        TextPrompt($"What's your [green]{subject}[/] file path?", PromptStyle = "green", Validator = pathExists)
 
-    pathPrompt.Validator <-
-        fun (path) ->
-            if File.Exists(path) then
-                ValidationResult.Success()
-            else
-                ValidationResult.Error("[red]Invalid path![/]")
-
-    AnsiConsole.Prompt(pathPrompt)
+    AnsiConsole.Prompt(prompt)
 
 type Choice = { Id: int; Description: string }
 
@@ -33,13 +30,12 @@ let promptChoice () =
             SelectionPrompt<Choice>()
                 .AddChoices(
                     { Id = 0
-                      Description = "List Dependencies from Project" },
+                      Description = "List dependencies from a project" },
                     { Id = 1
-                      Description = "Replace PackageReference with ProjectReference" },
+                      Description = "Replace a PackageReference with ProjectReference" },
                     { Id = 2
                       Description = "Load another [Green].sln[/]" },
-                    { Id = -1
-                      Description = "Exit" }
+                    { Id = -1; Description = "Exit" }
                 )
                 .UseConverter(fun c -> c.Description)
         )

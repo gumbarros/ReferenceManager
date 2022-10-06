@@ -7,13 +7,13 @@
 
     <ItemGroup>
         <Compile Include="Utils.fs" />
-        <Compile Include="SolutionManager.fs" />
-        <Compile Include="ListDependencies.fs" />
-        <Compile Include="ReplaceDependency.fs" />
+        <Compile Include="Solution.fs" />
+        <Compile Include="References.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="envdte" Version="17.3.32804.24" />
       <PackageReference Include="Microsoft.Build" Version="17.3.1" />
       <PackageReference Include="Spectre.Console" Version="0.45.0" />
     </ItemGroup>

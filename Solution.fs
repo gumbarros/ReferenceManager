@@ -4,12 +4,20 @@ open Microsoft.Build.Construction
 open ReferenceManager.Utils
 open System
 open System.IO
+open System.Linq
 open Spectre.Console
 
 type SolutionData =
     { Name: string
       Path: string
       File: SolutionFile }
+
+
+let getSolutionProjects (solution: SolutionFile) =
+    solution
+        .ProjectsInOrder
+        .Where(fun p -> p.ProjectName.EndsWith("proj"))
+        .Select(fun p -> p.AbsolutePath |> ProjectRootElement.Open)
 
 let getSolutionProjectNames (solution: SolutionFile) =
     query {
@@ -34,8 +42,11 @@ let writeSolutionProjects (solution: SolutionData) =
     AnsiConsole.Write solutionTree
     AnsiConsole.WriteLine String.Empty
 
-let promptSolution () : SolutionData=
+let promptSolution () : SolutionData =
     let path = promptPath (".sln")
     let file = SolutionFile.Parse(path)
     let name = getSolutionNameFromPath path
-    {Name = name;Path=path;File = file}
+
+    { Name = name
+      Path = path
+      File = file }

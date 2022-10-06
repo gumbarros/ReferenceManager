@@ -1,7 +1,6 @@
 ﻿module ReferenceManager.Program
 
-open ReferenceManager.ListDependencies
-open ReferenceManager.ReplaceDependency
+open ReferenceManager.References
 open ReferenceManager.Utils
 open ReferenceManager.SolutionManager
 
@@ -16,9 +15,9 @@ let rec loadSolution() =
         let selectedChoice = promptChoice()
 
         match selectedChoice with
-        | 0 -> listDependenciesFromProject solution.File
-        | 1 -> replaceDependencies solution.File ()
-        | 2 -> loadSolution()
+        | 0 -> listReferencesFromProject solution.File
+        | 1 -> replacePackageByProjectReference solution.File 
+        | 2 -> loadSolution ()
         | _ -> exit(1)
 
 loadSolution()
