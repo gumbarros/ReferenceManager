@@ -18,8 +18,8 @@ dotnet build
 dotnet run
 ```
 ## Downloading and running the cross-platform binary
-Download from the [releases](https://github.com/gumbarros/ReferenceManager/releases/tag/v1.0.0) page.
-Run from your OS the console
+1. Download from the [releases](https://github.com/gumbarros/ReferenceManager/releases/tag/v1.0.0) page.
+2. Run from your OS terminal.
 ```
 ./ReferenceManager
 ```
