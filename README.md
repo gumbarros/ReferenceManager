@@ -8,3 +8,20 @@ Imagine the following situation, you have several NuGet libraries and projects t
 # Limitations
 - Only solutions with projects with the new SDK style are supported. (Sad for me too, because I created this project thinking about non-SDK projects 😢)
 - For now, only SDK-style .csprojs are supported for the ProjectReference input. If you need .vbproj and .fsproj support, you can ask me for this improvement or make a pull request
+# Installation
+
+## Building from source
+> .NET 6 required.
+```
+git clone https://github.com/gumbarros/ReferenceManager .
+dotnet build
+dotnet run
+```
+## Downloading and running the cross-platform binary
+Download from the [releases](https://github.com/gumbarros/ReferenceManager/releases/tag/v1.0.0) page.
+Run from your OS the console
+```
+./ReferenceManager
+```
+
+If you want a single file binary, build from the source for your platform.
