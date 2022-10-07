@@ -6,16 +6,20 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="Extensions.fs" />
         <Compile Include="Utils.fs" />
         <Compile Include="Solution.fs" />
-        <Compile Include="References.fs" />
+        <Compile Include="ListReferences.fs" />
+        <Compile Include="ReplaceReference.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="envdte" Version="17.3.32804.24" />
-      <PackageReference Include="Microsoft.Build" Version="17.3.1" />
-      <PackageReference Include="Spectre.Console" Version="0.45.0" />
+        <PackageReference Include="Microsoft.Build.Locator" Version="1.5.5" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+        <PackageReference Include="MvsSln" Version="2.6.1" />
+        <PackageReference Include="Spectre.Console" Version="0.45.0" />
     </ItemGroup>
 
 </Project>

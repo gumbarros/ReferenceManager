@@ -1,14 +1,21 @@
 module ReferenceManager.Utils
 
 open System
+open Microsoft.Extensions.Configuration
+open ReferenceManager.Extensions
 open System.IO
 open Spectre.Console
+
+let setMSBuildPathFromAppSettings() =
+    let builder = ConfigurationBuilder().AddJsonFile("appsettings.json", true, false)
+    let root = builder.Build()
+    Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", root["MSBuildPath"])
 
 let writeAppTitle () =
     AnsiConsole.Write(Rule())
     AnsiConsole.MarkupLine("[bold]Welcome to Reference Manager 🛠 !️[/]")
     AnsiConsole.Write(Rule())
-    AnsiConsole.WriteLine String.Empty
+    AnsiConsole.EmptyLine
 
 let pathExists (path: string) =
     if File.Exists(path) then
@@ -30,7 +37,7 @@ let promptChoice () =
             SelectionPrompt<Choice>()
                 .AddChoices(
                     { Id = 0
-                      Description = "List dependencies from a project" },
+                      Description = "List PackageReferences from a project" },
                     { Id = 1
                       Description = "Replace a PackageReference with ProjectReference" },
                     { Id = 2
@@ -40,3 +47,4 @@ let promptChoice () =
                 .UseConverter(fun c -> c.Description)
         )
         .Id
+
