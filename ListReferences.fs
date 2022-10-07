@@ -17,7 +17,10 @@ let promptProject (solution: SolutionData) =
     AnsiConsole.Prompt<string>
     <| selectionPrompt.AddChoices(getSolutionProjectNames solution)
 
-let writeReferences (references: IEnumerable<Projects.Item>) =
+let writePackageReferences (projectName: string, references: IEnumerable<Projects.Item>) =
+    AnsiConsole.Markup $"[purple]Package References[/] in {projectName}:"
+    AnsiConsole.EmptyLine
+
     for reference in references do
         AnsiConsole.Markup $"[green]-[/] {reference.evaluatedInclude}"
 
@@ -39,4 +42,4 @@ let listReferencesFromProject (solution: SolutionData) =
     let references =
         selectedProject.PackageReferences
 
-    writeReferences references
+    writePackageReferences(selectedProject.Name,references)

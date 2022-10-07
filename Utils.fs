@@ -1,19 +1,12 @@
 module ReferenceManager.Utils
 
-open System
-open Microsoft.Extensions.Configuration
 open ReferenceManager.Extensions
 open System.IO
 open Spectre.Console
 
-let setMSBuildPathFromAppSettings() =
-    let builder = ConfigurationBuilder().AddJsonFile("appsettings.json", true, false)
-    let root = builder.Build()
-    Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", root["MSBuildPath"])
-
 let writeAppTitle () =
     AnsiConsole.Write(Rule())
-    AnsiConsole.MarkupLine("[bold]Welcome to Reference Manager 🛠 !️[/]")
+    AnsiConsole.WriteLine("Welcome to Reference Manager !")
     AnsiConsole.Write(Rule())
     AnsiConsole.EmptyLine
 
