@@ -5,12 +5,8 @@ open ReferenceManager.Utils
 open ReferenceManager.Solution
 open ReferenceManager.ListReferences
 open ReferenceManager.ReplaceReference
-open System
 
-try
-    MSBuildLocator.RegisterDefaults() |> ignore
-with
-| :? ArgumentException -> setMSBuildPathFromAppSettings()
+MSBuildLocator.RegisterDefaults() |> ignore
 
 writeAppTitle()
 
